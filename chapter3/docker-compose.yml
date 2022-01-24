@@ -1,0 +1,77 @@
+version: "3.7"
+services:
+  brokentelephone-go:
+    image: codeboten/brokentelephone-go
+    build: ./go
+    container_name: brokentelephone-go
+    depends_on:
+      - opentelemetry-collector
+    networks:
+      - cloud-native-observability
+    environment:
+      NEXT_PLAYER: "brokentelephone-java:50051"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://opentelemetry-collector:4317"
+      OTEL_EXPORTER_OTLP_INSECURE: "true"
+      OTEL_TRACES_EXPORTER: "otlp"
+      OTEL_SERVICE_NAME: "brokentelephone-go"
+  brokentelephone-java:
+    image: codeboten/brokentelephone:java
+    build: ./java
+    container_name: brokentelephone-java
+    depends_on:
+      - opentelemetry-collector
+    networks:
+      - cloud-native-observability
+    environment:
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://opentelemetry-collector:4317"
+      OTEL_EXPORTER_OTLP_INSECURE: "true"
+      OTEL_TRACES_EXPORTER: "otlp"
+      OTEL_SERVICE_NAME: "brokentelephone-java"
+  brokentelephone-js:
+    image: codeboten/brokentelephone:js
+    build: ./js
+    container_name: brokentelephone-js
+    depends_on:
+      - opentelemetry-collector
+    networks:
+      - cloud-native-observability
+    environment:
+      NEXT_PLAYER: "brokentelephone-python:50051"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "http://opentelemetry-collector:55681/v1/trace"
+      OTEL_EXPORTER_OTLP_INSECURE: "true"
+      OTEL_TRACES_EXPORTER: "otlp_proto_grpc"
+      OTEL_SERVICE_NAME: "brokentelephone-js"
+  brokentelephone-python:
+    image: codeboten/brokentelephone:python
+    build: ./python
+    container_name: brokentelephone-python
+    networks:
+      - cloud-native-observability
+    depends_on:
+      - opentelemetry-collector
+    environment:
+      NEXT_PLAYER: "brokentelephone-go:50051"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "opentelemetry-collector:4317"
+      OTEL_EXPORTER_OTLP_INSECURE: "true"
+      OTEL_TRACES_EXPORTER: "otlp_proto_grpc"
+      OTEL_SERVICE_NAME: "brokentelephone-python"
+  jaeger:
+    image: jaegertracing/all-in-one:latest
+    container_name: jaeger
+    ports:
+      - "16686:16686"
+    networks:
+      - cloud-native-observability
+  opentelemetry-collector:
+    image: otel/opentelemetry-collector-contrib:0.42.0
+    container_name: opentelemetry-collector
+    volumes:
+      - ./config/collector/config.yml:/etc/opentelemetry-collector.yml
+    command:
+      - "--config=/etc/opentelemetry-collector.yml"
+    networks:
+      - cloud-native-observability
+    depends_on:
+      - jaeger
+networks:
+  cloud-native-observability:
