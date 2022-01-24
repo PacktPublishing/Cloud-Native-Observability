@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "@grpc/grpc-js": "^1.4.1",
+    "@opentelemetry/auto-instrumentations-node": "^0.25.0",
+    "@opentelemetry/exporter-collector": "^0.25.0",
+    "@opentelemetry/instrumentation-grpc": "^0.26.0",
+    "@opentelemetry/sdk-trace-node": "^1.0.0",
+    "google-protobuf": "^3.19.0-rc.1",
+    "minimist": "^1.2.5"
+  }
+}
