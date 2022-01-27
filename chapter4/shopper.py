@@ -29,6 +29,12 @@ tracer = configure_tracer("shopper", "0.1.2")
 def browse():
     print("visiting the grocery store")
     add_item_to_cart("orange")
+    span = trace.get_current_span()
+    span.set_attribute("http.method", "GET")
+    span.set_attribute("http.flavor", "1.1")
+    span.set_attribute("http.url", "http://localhost:5000")
+    span.set_attribute("net.peer.ip", "127.0.0.1")
+
 
 @tracer.start_as_current_span("add item to cart")
 def add_item_to_cart(item):
