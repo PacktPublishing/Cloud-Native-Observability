@@ -17,7 +17,7 @@ def browse():
     with tracer.start_as_current_span(
         "web request", kind=trace.SpanKind.CLIENT
     ) as span:
-        url = "http://localhost:5000"
+        url = "http://localhost:5000/products"
         span.set_attributes(
             {
                 SpanAttributes.HTTP_METHOD: "GET",
