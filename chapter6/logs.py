@@ -1,6 +1,8 @@
+import time
 from opentelemetry.sdk._logs.export import ConsoleLogExporter, BatchLogProcessor
 from opentelemetry.sdk._logs import (
     LogEmitterProvider,
+    LogRecord,
     get_log_emitter_provider,
     set_log_emitter_provider,
 )
@@ -19,4 +21,10 @@ if __name__ == "__main__":
     log_emitter = get_log_emitter_provider().get_log_emitter(
         "shopper",
         instrumenting_module_verison="0.1.2",
+    )
+    log_emitter.emit(
+        LogRecord(
+            timestamp=time.time_ns(),
+            body="first log line",
+        )
     )
