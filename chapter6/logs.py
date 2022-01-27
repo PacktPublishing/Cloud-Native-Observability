@@ -35,5 +35,5 @@ if __name__ == "__main__":
     logger = logging.getLogger(__file__)
     handler = OTLPHandler()
     logger.addHandler(handler)
-    logger.warning("second log line")
+    logger.warning("second log line", extra={"key1": "val1"})
 
