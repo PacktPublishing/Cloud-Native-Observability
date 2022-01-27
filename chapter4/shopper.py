@@ -43,10 +43,7 @@ def browse():
                 resp.status_code
             )
         except Exception as err:
-            attributes = {
-                SpanAttributes.EXCEPTION_MESSAGE: str(err),
-            }
-            span.add_event("exception", attributes=attributes)
+            span.record_exception(err)
 
     add_item_to_cart("orange", 5)
 
