@@ -3,6 +3,7 @@ from opentelemetry import context, trace
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor, ConsoleSpanExporter
+from opentelemetry.semconv.trace import HttpFlavorValues, SpanAttributes
 from local_machine_resource_detector import LocalMachineResourceDetector
 
 
@@ -32,10 +33,11 @@ def browse():
     span = trace.get_current_span()
     span.set_attributes(
         {
-            "http.method": "GET",
-            "http.flavor": "1.1",
-            "http.url": "http://localhost:5000",
-            "net.peer.ip": "127.0.0.1",
+            SpanAttributes.HTTP_METHOD: "GET",
+            SpanAttributes.HTTP_FLAVOR: HttpFlavorValues.HTTP_1_1.value,
+            SpanAttributes.HTTP_URL: "http://localhost:5000",
+            SpanAttributes.NET_PEER_IP: "127.0.0.1",
+
         }
     )
 
