@@ -6,6 +6,7 @@ from opentelemetry.sdk._logs import (
     get_log_emitter_provider,
     set_log_emitter_provider,
 )
+from opentelemetry.sdk._logs.severity import SeverityNumber
 from opentelemetry.sdk.resources import Resource
 
 
@@ -26,5 +27,6 @@ if __name__ == "__main__":
         LogRecord(
             timestamp=time.time_ns(),
             body="first log line",
+            severity_number=SeverityNumber.INFO,
         )
     )
