@@ -2,6 +2,7 @@
 import requests
 
 from opentelemetry import trace
+from opentelemetry.propagate import inject
 from opentelemetry.semconv.trace import HttpFlavorValues, SpanAttributes
 
 from common import configure_tracer
@@ -26,7 +27,9 @@ def browse():
 
             }
         )
-        resp = requests.get(url)
+        headers = {}
+        inject(headers)
+        resp = requests.get(url, headers=headers)
         span.set_attribute(SpanAttributes.HTTP_STATUS_CODE, resp.status_code)
 
     add_item_to_cart("orange", 5)

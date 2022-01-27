@@ -1,11 +1,24 @@
 from flask import Flask, request
-from opentelemetry import trace
+from opentelemetry import context, trace
+from opentelemetry.propagate import extract
 from opentelemetry.semconv.trace import HttpFlavorValues, SpanAttributes
 from opentelemetry.trace import SpanKind
 from common import configure_tracer
 
+
 tracer = configure_tracer("grocery-store", "0.1.2")
 app = Flask(__name__)
+
+@app.before_request
+def before_request_func():
+    token = context.attach(extract(request.headers))
+    request.environ["context_token"] = token
+
+@app.teardown_request
+def teardown_request_func(err):
+    token = request.environ.get("context_token", None)
+    if token:
+        context.detach(token)
 
 @app.route("/")
 @tracer.start_as_current_span("welcome", kind=SpanKind.SERVER)
