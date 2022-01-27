@@ -5,21 +5,21 @@ from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import BatchSpanProcessor, ConsoleSpanExporter
 
 
-def configure_tracer():
+def configure_tracer(name, version):
     exporter = ConsoleSpanExporter()
     span_processor = BatchSpanProcessor(exporter)
     resource = Resource.create(
         {
-            "service.name": "shopper",
-            "service.version": "0.1.2",
+            "service.name": name,
+            "service.version": version,
         }
     )
     provider = TracerProvider(resource=resource)
     provider.add_span_processor(span_processor)
     trace.set_tracer_provider(provider)
-    return trace.get_tracer("shopper.py", "0.0.1")
+    return trace.get_tracer(name, version)
 
-tracer = configure_tracer()
+tracer = configure_tracer("shopper", "0.1.2")
 
 @tracer.start_as_current_span("browse")
 def browse():
