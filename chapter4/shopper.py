@@ -4,6 +4,7 @@ import requests
 from opentelemetry import trace
 from opentelemetry.propagate import inject
 from opentelemetry.semconv.trace import HttpFlavorValues, SpanAttributes
+from opentelemetry.trace import Status, StatusCode
 
 from common import configure_tracer
 from local_machine_resource_detector import LocalMachineResourceDetector
@@ -31,6 +32,12 @@ def browse():
         inject(headers)
         span.add_event("about to send a request")
         resp = requests.get(url, headers=headers)
+        if resp:
+            span.set_status(Status(StatusCode.OK))
+        else:
+            span.set_status(
+                Status(StatusCode.ERROR, "status code: {}".format(resp.status_code))
+            )
         span.add_event(
             "request sent",
             attributes={"url": url},
