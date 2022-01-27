@@ -11,5 +11,11 @@ def configure_tracer():
     trace.set_tracer_provider(provider)
     return trace.get_tracer("shopper.py", "0.0.1")
 
+def browse():
+    print("visiting the grocery store")
+
 if __name__ == "__main__":
     tracer = configure_tracer()
+    span = tracer.start_span("visit store")
+    browse()
+    span.end()
