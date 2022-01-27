@@ -3,6 +3,7 @@ from opentelemetry import context, trace
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import ConsoleSpanExporter, SimpleSpanProcessor
 
+
 def configure_tracer():
     exporter = ConsoleSpanExporter()
     span_processor = SimpleSpanProcessor(exporter)
@@ -11,17 +12,21 @@ def configure_tracer():
     trace.set_tracer_provider(provider)
     return trace.get_tracer("shopper.py", "0.0.1")
 
+tracer = configure_tracer()
+
+@tracer.start_as_current_span("browse")
 def browse():
     print("visiting the grocery store")
+    add_item_to_cart("orange")
 
+@tracer.start_as_current_span("add item to cart")
 def add_item_to_cart(item):
     print("add {} to cart".format(item))
 
+@tracer.start_as_current_span("visit store")
+def visit_store():
+    browse()
+
 
 if __name__ == "__main__":
-    tracer = configure_tracer()
-    with tracer.start_as_current_span("visit store"):
-        with tracer.start_as_current_span("browse"):
-            browse()
-            with tracer.start_as_current_span("add item to cart"):
-                add_item_to_cart("orange")
+    visit_store()
