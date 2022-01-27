@@ -30,20 +30,17 @@ def browse():
         headers = {}
         inject(headers)
         span.add_event("about to send a request")
-        try:
-            url = "invalid_url"
-            resp = requests.get(url, headers=headers)
-            span.add_event(
-                "request sent",
-                Attributes={"url": url},
-                timestamp=0,
-            )
-            span.set_attribute(
-                SpanAttributes.HTTP_STATUS_CODE,
-                resp.status_code
-            )
-        except Exception as err:
-            span.record_exception(err)
+        url = "invalid_url"
+        resp = requests.get(url, headers=headers)
+        span.add_event(
+            "request sent",
+            Attributes={"url": url},
+            timestamp=0,
+        )
+        span.set_attribute(
+            SpanAttributes.HTTP_STATUS_CODE,
+            resp.status_code
+        )
 
     add_item_to_cart("orange", 5)
 
