@@ -33,6 +33,7 @@ if __name__ == "__main__":
         )
     )
     logger = logging.getLogger(__file__)
+    logger.setLevel(logging.DEBUG)
     handler = OTLPHandler()
     logger.addHandler(handler)
     logger.info("second log line", extra={"key1": "val1"})
