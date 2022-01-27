@@ -29,7 +29,9 @@ def browse():
         )
         headers = {}
         inject(headers)
+        span.add_event("about to send a request")
         resp = requests.get(url, headers=headers)
+        span.add_event("request sent", attributes={"url": url}, timestamp=0)
         span.set_attribute(SpanAttributes.HTTP_STATUS_CODE, resp.status_code)
 
     add_item_to_cart("orange", 5)
