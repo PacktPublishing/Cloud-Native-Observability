@@ -37,7 +37,10 @@ def configure_logger(name, version):
 
 
 def configure_meter(name, version):
-    pass
+    exporter = ConsoleMetricExporter()
+    provider = MeterProvider()
+    set_meter_provider(provider)
+    return get_meter_provider().get_meter(name, version)
 
 
 def configure_tracer(name, version):
