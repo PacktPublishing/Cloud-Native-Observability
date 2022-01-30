@@ -13,6 +13,11 @@ exporters:
       insecure: true
   prometheus:
     endpoint: 0.0.0.0:8889
+  loki:
+    endpoint: http://loki:3100/loki/api/v1/push
+    labels:
+      resource:
+        service.name: "job"
 service:
   pipelines:
     traces:
@@ -23,4 +28,4 @@ service:
       exporters: [logging, prometheus]
     logs:
       receivers: [otlp]
-      exporters: [logging]
+      exporters: [logging, loki]
