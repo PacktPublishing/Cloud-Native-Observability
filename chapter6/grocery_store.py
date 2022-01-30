@@ -1,3 +1,4 @@
+from logging.config import dictConfig
 import requests
 from flask import Flask, request
 from opentelemetry import context, trace
@@ -7,17 +8,41 @@ from opentelemetry.propagators.composite import CompositePropagator
 from opentelemetry.semconv.trace import HttpFlavorValues, SpanAttributes
 from opentelemetry.trace import SpanKind
 from opentelemetry.trace.propagation import tracecontext
-from common import configure_tracer, set_span_attributes_from_flask
+from common import (
+    configure_logger,
+    configure_meter,
+    configure_tracer,
+    set_span_attributes_from_flask,
+    start_recording_memory_metrics,
+)
 
 
 tracer = configure_tracer("grocery-store", "0.1.2")
-set_global_textmap(CompositePropagator([tracecontext.TraceContextTextMapPropagator(), B3MultiFormat()]))
+meter = configure_meter("grocery-store", "0.1.2")
+logger = configure_logger("grocery-store", "0.1.2")
+dictConfig(
+    {
+        "version": 1,
+        "handlers": {
+            "otlp": {
+                "class": "opentelemetry.sdk._logs.OTLPHandler",
+            }
+        },
+        "root": {"level": "DEBUG", "handlers": ["otlp"]},
+    }
+)
+
+set_global_textmap(
+    CompositePropagator([tracecontext.TraceContextTextMapPropagator(), B3MultiFormat()])
+)
 app = Flask(__name__)
+
 
 @app.before_request
 def before_request_func():
     token = context.attach(extract(request.headers))
     request.environ["context_token"] = token
+
 
 @app.teardown_request
 def teardown_request_func(err):
@@ -25,11 +50,13 @@ def teardown_request_func(err):
     if token:
         context.detach(token)
 
+
 @app.route("/")
 @tracer.start_as_current_span("welcome", kind=SpanKind.SERVER)
 def welcome():
     set_span_attributes_from_flask()
     return "Welcome to the grocery store!"
+
 
 @app.route("/products")
 @tracer.start_as_current_span("/products", kind=SpanKind.SERVER)

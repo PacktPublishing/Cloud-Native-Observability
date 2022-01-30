@@ -62,3 +62,7 @@ def set_span_attributes_from_flask():
             SpanAttributes.HTTP_CLIENT_IP: request.remote_addr,
         }
     )
+
+
+def start_recording_memory_metrics():
+    pass
