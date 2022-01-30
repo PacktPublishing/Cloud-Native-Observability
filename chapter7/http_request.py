@@ -11,6 +11,7 @@ def add_response_attributes(span, response):
     span.set_attribute("http.response.headers", str(response.headers))
 
 
+RequestsInstrumentor().uninstrument()
 RequestsInstrumentor().instrument(
     name_callback=rename_span,
     span_callback=add_response_attributes,
