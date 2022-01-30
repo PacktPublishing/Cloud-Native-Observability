@@ -9,6 +9,14 @@ from opentelemetry.sdk.trace.export import (
 from opentelemetry.instrumentation.requests import RequestsInstrumentor
 
 
+def rename_span(method, url):
+    return f"Web Request {method}"
+
+
+def add_response_attributes(span, response):
+    span.set_attribute("http.response.headers", str(response.headers))
+
+
 def configure_tracer():
     exporter = ConsoleSpanExporter()
     span_processor = BatchSpanProcessor(exporter)
@@ -18,7 +26,11 @@ def configure_tracer():
 
 
 configure_tracer()
-RequestsInstrumentor().instrument()
+RequestsInstrumentor().instrument(
+    name_callback=rename_span,
+    span_callback=add_response_attributes,
+)
+
 
 url = "https://www.cloudnativeobservability.com"
 resp = requests.get(url)
