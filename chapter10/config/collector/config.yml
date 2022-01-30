@@ -11,6 +11,8 @@ exporters:
     endpoint: jaeger:14250
     tls:
       insecure: true
+  prometheus:
+    endpoint: 0.0.0.0:8889
 service:
   pipelines:
     traces:
@@ -18,7 +20,7 @@ service:
       exporters: [logging, zipkin, jaeger]
     metrics:
       receivers: [otlp]
-      exporters: [logging]
+      exporters: [logging, prometheus]
     logs:
       receivers: [otlp]
       exporters: [logging]
