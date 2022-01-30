@@ -16,6 +16,7 @@ source cloud_native_observability/bin/activate
 # install packages
 pip install opentelemetry-api opentelemetry-sdk opentelemetry-propagator-b3
 pip install flask requests
+pip install opentelemetry-instrumentation-wsgi
 ```
 
 ---

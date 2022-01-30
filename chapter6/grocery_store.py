@@ -8,6 +8,7 @@ from opentelemetry.propagators.composite import CompositePropagator
 from opentelemetry.semconv.trace import HttpFlavorValues, SpanAttributes
 from opentelemetry.trace import SpanKind
 from opentelemetry.trace.propagation import tracecontext
+from opentelemetry.instrumentation.wsgi import OpenTelemetryMiddleware
 from common import (
     configure_logger,
     configure_meter,
@@ -36,6 +37,7 @@ set_global_textmap(
     CompositePropagator([tracecontext.TraceContextTextMapPropagator(), B3MultiFormat()])
 )
 app = Flask(__name__)
+app.wsgi_app = OpenTelemetryMiddleware(app.wsgi_app)
 
 
 @app.before_request
