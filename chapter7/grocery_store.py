@@ -2,7 +2,7 @@
 from logging.config import dictConfig
 import requests
 from flask import Flask
-import time
+from opentelemetry.instrumentation.wsgi import OpenTelemetryMiddleware
 
 dictConfig(
     {
@@ -16,6 +16,7 @@ dictConfig(
     }
 )
 app = Flask(__name__)
+app.wsgi_app = OpenTelemetryMiddleware(app.wsgi_app)
 
 
 @app.route("/")

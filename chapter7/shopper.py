@@ -10,12 +10,6 @@ logger.setLevel(logging.DEBUG)
 logger.addHandler(OTLPHandler())
 
 
-@tracer.start_as_current_span("browse")
-def browse():
-    resp = requests.get("http://localhost:5000/products")
-    add_item_to_cart("orange", 5)
-
-
 @tracer.start_as_current_span("add item to cart")
 def add_item_to_cart(item, quantity):
     span = trace.get_current_span()
@@ -26,6 +20,12 @@ def add_item_to_cart(item, quantity):
         }
     )
     logger.info("add {} to cart".format(item))
+
+
+@tracer.start_as_current_span("browse")
+def browse():
+    resp = requests.get("http://localhost:5000/products")
+    add_item_to_cart("orange", 5)
 
 
 @tracer.start_as_current_span("visit store")
