@@ -16,7 +16,16 @@ from opentelemetry.sdk._logs import (
 
 
 def configure_logger(name, version):
-    provider = LogEmitterProvider(resource=Resource.create())
+    local_resource = LocalMachineResourceDetector().detect()
+    resource = local_resource.merge(
+        Resource.create(
+            {
+                ResourceAttributes.SERVICE_NAME: name,
+                ResourceAttributes.SERVICE_VERSION: version,
+            }
+        )
+    )
+    provider = LogEmitterProvider(resource=resource)
     set_log_emitter_provider(provider)
     exporter = ConsoleLogExporter()
     provider.add_log_processor(BatchLogProcessor(exporter))
