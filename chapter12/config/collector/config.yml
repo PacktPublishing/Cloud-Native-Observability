@@ -17,6 +17,7 @@ processors:
           type: probabilistic,
           probabilistic: { sampling_percentage: 10 },
         },
+        { name: slow, type: latency, latency: { threshold_ms: 1000 } },
       ]
 
 service:
