@@ -10,7 +10,14 @@ exporters:
 processors:
   tail_sampling:
     decision_wait: 5s
-    policies: [{ name: always, type: always_sample }]
+    policies:
+      [
+        {
+          name: probability,
+          type: probabilistic,
+          probabilistic: { sampling_percentage: 10 },
+        },
+      ]
 
 service:
   pipelines:
