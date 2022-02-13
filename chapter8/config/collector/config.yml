@@ -39,8 +39,18 @@ processors:
   probabilistic_sampler:
     sampling_percentage: 20
     hash_seed: 12345
+  resource:
+    attributes:
+      - key: deployment.environment
+        value: staging
+        action: upsert
+      - key: container.runtime
+        from_attribute: runtime
+        action: insert
+      - key: runtime
+        action: delete
 service:
   pipelines:
     traces/otlp:
       receivers: [otlp]
-      processors: [attributes/include-secret, probabilistic_sampler]
+      processors: [attributes/include-secret, probabilistic_sampler, resource]
