@@ -63,8 +63,15 @@ processors:
     timeout: 10s # default 200ms
     send_batch_size: 10000 # default 8192
     send_batch_max_size: 11000 # default 0 – no limit
+  memory_limiter:
+    check_interval: 5s
+    limit_mib: 250
+    spike_limit_mib: 50
+extensions:
+  memory_ballast:
+    size_mib: 125
 service:
   pipelines:
     traces/otlp:
       receivers: [otlp]
-      processors: [batch, span/rename, span/create-attributes]
+      processors: [batch, memory_limiter, span/rename, span/create-attributes]
