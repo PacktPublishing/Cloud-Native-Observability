@@ -29,16 +29,15 @@ processors:
         from_attribute: old-key
       - key: old-key
         action: delete
+  attributes/include-secret:
+    include:
+      services: ["super-secret", "secret"]
+      match_type: strict
+    actions:
+      - key: secret-attr
+        action: delete
 service:
   pipelines:
     traces/otlp:
       receivers: [otlp]
-      processors: [attributes/copy-and-delete]
-    traces/jaeger:
-      receivers: [jaeger]
-      processors: [attributes/copy-and-delete]
-    traces/both:
-      receivers: [otlp, jaeger]
-      processors: [attributes/copy-and-delete]
-    metrics:
-      receivers: [hostmetrics]
+      processors: [attributes/include-secret]
