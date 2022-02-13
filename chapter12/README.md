@@ -22,19 +22,19 @@ pip freeze | grep opentelemetry
 # download the collector
 
 # Linux amd64
-wget -O otelcol https://github.com/open-telemetry/opentelemetry-collector-contrib/releases/download/v0.40.0/otelcontribcol_linux_amd64
+wget -O otelcol.tar.gz https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.44.0/otelcol-contrib_0.44.0_linux_amd64.tar.gz
 
 # Linux arm64
-wget -O otelcol https://github.com/open-telemetry/opentelemetry-collector-contrib/releases/download/v0.40.0/otelcontribcol_linux_arm64
+wget -O otelcol.tar.gz https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.44.0/otelcol-contrib_0.44.0_linux_arm64.tar.gz
 
 # MacOS amd64
-wget -O otelcol https://github.com/open-telemetry/opentelemetry-collector-contrib/releases/download/v0.40.0/otelcontribcol_darwin_amd64
+wget -O otelcol.tar.gz https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.44.0/otelcol-contrib_0.44.0_darwin_amd64.tar.gz
 
 # MacOS arm64
-wget -O otelcol https://github.com/open-telemetry/opentelemetry-collector-contrib/releases/download/v0.40.0/otelcontribcol_darwin_arm64
+wget -O otelcol.tar.gz https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/v0.44.0/otelcol-contrib_0.44.0_darwin_arm64.tar.gz
 
-chmod +x ./otelcol
-./otelcol --version
+tar -xzf otelcol.tar.gz otelcol-contrib
+./otelcol-contrib --version
 ```
 
 ---
