@@ -7,6 +7,9 @@ receivers:
     scrapers:
       memory:
       network:
+        include:
+          match_type: strict
+          interfaces: [lo0]
 exporters:
   logging:
     loglevel: debug
