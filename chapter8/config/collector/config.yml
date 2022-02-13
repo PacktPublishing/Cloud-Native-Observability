@@ -1,86 +1,17 @@
 receivers:
-  hostmetrics:
-    collection_interval: 10s
-    scrapers:
-      load:
-      memory:
-      network:
   otlp:
     protocols:
       grpc:
-  jaeger:
-    protocols:
-      thrift_binary:
-processors:
-  attributes/add-key:
-    actions:
-      - key: example-key
-        action: insert
-        value: first
-  attributes/update-key:
-    actions:
-      - key: example-key
-        action: update
-        value: second
-  attributes/copy-and-delete:
-    actions:
-      - key: new-key
-        action: upsert
-        from_attribute: old-key
-      - key: old-key
-        action: delete
-  attributes/include-secret:
-    include:
-      services: ["super-secret", "secret"]
-      match_type: strict
-    actions:
-      - key: secret-attr
-        action: delete
-  probabilistic_sampler:
-    sampling_percentage: 20
-    hash_seed: 12345
-  resource:
-    attributes:
-      - key: deployment.environment
-        value: staging
-        action: upsert
-      - key: container.runtime
-        from_attribute: runtime
-        action: insert
-      - key: runtime
-        action: delete
-  span/rename:
-    name:
-      from_attributes: ["messaging.system", "messaging.operation"]
-      separator: ":"
-  span/create-attributes:
-    name:
-      to_attributes:
-        rules:
-          - ^\/stores\/(?P<storeId>.*)\/.*$
-          - ^.*\/orders/(?P<orderId>.*)\/.*$
-  batch:
-    timeout: 10s # default 200ms
-    send_batch_size: 10000 # default 8192
-    send_batch_max_size: 11000 # default 0 – no limit
-  memory_limiter:
-    check_interval: 5s
-    limit_mib: 250
-    spike_limit_mib: 50
-extensions:
-  memory_ballast:
-    size_mib: 125
 exporters:
-  jaeger:
-    endpoint: localhost:14250
-  otlp:
-    endpoint: localhost:4317
+  logging:
 service:
   pipelines:
-    traces/otlp:
+    traces:
       receivers: [otlp]
-      processors: [batch, memory_limiter, span/rename, span/create-attributes]
-      exporters: [jaeger, otlp]
+      exporters: [logging]
     metrics:
       receivers: [otlp]
-      exporters: [otlp]
+      exporters: [logging]
+    logs:
+      receivers: [otlp]
+      exporters: [logging]
