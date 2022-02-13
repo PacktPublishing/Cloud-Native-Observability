@@ -25,6 +25,12 @@ processors:
     name:
       from_attributes: [location, item, quantity]
       separator: ":"
+  filter/network-connections:
+    metrics:
+      exclude:
+        match_type: strict
+        metric_names:
+          - system.network.connections
 service:
   pipelines:
     traces:
@@ -33,7 +39,7 @@ service:
       exporters: [logging]
     metrics:
       receivers: [otlp, hostmetrics]
-      processors: [batch]
+      processors: [batch, filter/network-connections]
       exporters: [logging]
     logs:
       receivers: [otlp]
