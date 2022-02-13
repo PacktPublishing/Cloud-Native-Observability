@@ -4,14 +4,20 @@ receivers:
       grpc:
 exporters:
   logging:
+processors:
+  batch:
+    timeout: 10s
 service:
   pipelines:
     traces:
       receivers: [otlp]
+      processors: [batch]
       exporters: [logging]
     metrics:
       receivers: [otlp]
+      processors: [batch]
       exporters: [logging]
     logs:
       receivers: [otlp]
+      processors: [batch]
       exporters: [logging]
