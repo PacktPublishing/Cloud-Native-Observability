@@ -11,13 +11,27 @@ receivers:
   jaeger:
     protocols:
       thrift_binary:
+processors:
+  attributes/add-key:
+    actions:
+      - key: example-key
+        action: insert
+        value: first
+  attributes/update-key:
+    actions:
+      - key: example-key
+        action: update
+        value: second
 service:
   pipelines:
     traces/otlp:
       receivers: [otlp]
+      processors: [attributes/add-key, attributes/update-key]
     traces/jaeger:
       receivers: [jaeger]
+      processors: [attributes/add-key, attributes/update-key]
     traces/both:
       receivers: [otlp, jaeger]
+      processors: [attributes/add-key, attributes/update-key]
     metrics:
       receivers: [hostmetrics]
