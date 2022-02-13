@@ -8,11 +8,20 @@ exporters:
 processors:
   batch:
     timeout: 10s
+  attributes/add-location:
+    actions:
+      - key: location
+        action: insert
+        value: europe
+  span/rename:
+    name:
+      from_attributes: [location, item, quantity]
+      separator: ":"
 service:
   pipelines:
     traces:
       receivers: [otlp]
-      processors: [batch]
+      processors: [batch, attributes/add-location, span/rename]
       exporters: [logging]
     metrics:
       receivers: [otlp]
