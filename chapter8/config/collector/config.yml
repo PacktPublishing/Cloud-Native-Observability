@@ -22,16 +22,23 @@ processors:
       - key: example-key
         action: update
         value: second
+  attributes/copy-and-delete:
+    actions:
+      - key: new-key
+        action: upsert
+        from_attribute: old-key
+      - key: old-key
+        action: delete
 service:
   pipelines:
     traces/otlp:
       receivers: [otlp]
-      processors: [attributes/add-key, attributes/update-key]
+      processors: [attributes/copy-and-delete]
     traces/jaeger:
       receivers: [jaeger]
-      processors: [attributes/add-key, attributes/update-key]
+      processors: [attributes/copy-and-delete]
     traces/both:
       receivers: [otlp, jaeger]
-      processors: [attributes/add-key, attributes/update-key]
+      processors: [attributes/copy-and-delete]
     metrics:
       receivers: [hostmetrics]
