@@ -49,8 +49,18 @@ processors:
         action: insert
       - key: runtime
         action: delete
+  span/rename:
+    name:
+      from_attributes: ["messaging.system", "messaging.operation"]
+      separator: ":"
+  span/create-attributes:
+    name:
+      to_attributes:
+        rules:
+          - ^\/stores\/(?P<storeId>.*)\/.*$
+          - ^.*\/orders/(?P<orderId>.*)\/.*$
 service:
   pipelines:
     traces/otlp:
       receivers: [otlp]
-      processors: [attributes/include-secret, probabilistic_sampler, resource]
+      processors: [span/rename, span/create-attributes]
