@@ -35,6 +35,49 @@ tar -xzf otelcol.tar.gz otelcol-contrib
 ./otelcol-contrib --version
 ```
 
+## Receivers
+
+Receivers included in the OpenTelemetry Core distribution.
+
+|                      | Traces | Metrics | Logs |
+| -------------------- | :----: | :-----: | :--: |
+| Host Metrics         |        |   ✔️    |      |
+| Jaeger               |   ✔️   |         |      |
+| Kafka                |   ✔️   |   ✔️    |  ✔️  |
+| OpenCensus           |   ✔️   |   ✔️    |      |
+| OpenTelemetry (OTLP) |   ✔️   |   ✔️    |  ✔️  |
+| Prometheus           |        |   ✔️    |      |
+| Zipkin               |   ✔️   |         |      |
+
+## Processors
+
+Processors included in the OpenTelemetry Core distribution.
+
+|                        | Traces | Metrics | Logs |
+| ---------------------- | :----: | :-----: | :--: |
+| Attributes             |   ✔️   |         |  ✔️  |
+| Batch                  |   ✔️   |   ✔️    |  ✔️  |
+| Filter                 |        |   ✔️    |  ✔️  |
+| Memory Limiter         |   ✔️   |   ✔️    |  ✔️  |
+| Probabilistic Sampling |   ✔️   |         |      |
+| Resource               |   ✔️   |   ✔️    |  ✔️  |
+| Span                   |   ✔️   |         |      |
+
+## Exporters
+
+Exporters included in the OpenTelemetry Core distribution.
+
+|                      | Traces | Metrics | Logs |
+| -------------------- | :----: | :-----: | :--: |
+| File                 |   ✔️   |   ✔️    |  ✔️  |
+| Jaeger               |   ✔️   |         |      |
+| Kafka                |   ✔️   |   ✔️    |  ✔️  |
+| Logging              |   ✔️   |   ✔️    |  ✔️  |
+| OpenCensus           |   ✔️   |   ✔️    |      |
+| OpenTelemetry (OTLP) |   ✔️   |   ✔️    |  ✔️  |
+| Prometheus           |        |   ✔️    |      |
+| Zipkin               |   ✔️   |         |      |
+
 ---
 
 _Cloud Native Observability_
