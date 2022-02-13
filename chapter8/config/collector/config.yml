@@ -1,0 +1,15 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+  jaeger:
+    protocols:
+      thrift_binary:
+service:
+  pipelines:
+    traces/otlp:
+      receivers: [otlp]
+    traces/jaeger:
+      receivers: [jaeger]
+    traces/both:
+      receivers: [otlp, jaeger]
