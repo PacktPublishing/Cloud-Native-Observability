@@ -36,8 +36,11 @@ processors:
     actions:
       - key: secret-attr
         action: delete
+  probabilistic_sampler:
+    sampling_percentage: 20
+    hash_seed: 12345
 service:
   pipelines:
     traces/otlp:
       receivers: [otlp]
-      processors: [attributes/include-secret]
+      processors: [attributes/include-secret, probabilistic_sampler]
