@@ -70,8 +70,17 @@ processors:
 extensions:
   memory_ballast:
     size_mib: 125
+exporters:
+  jaeger:
+    endpoint: localhost:14250
+  otlp:
+    endpoint: localhost:4317
 service:
   pipelines:
     traces/otlp:
       receivers: [otlp]
       processors: [batch, memory_limiter, span/rename, span/create-attributes]
+      exporters: [jaeger, otlp]
+    metrics:
+      receivers: [otlp]
+      exporters: [otlp]
