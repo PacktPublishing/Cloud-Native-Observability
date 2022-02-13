@@ -4,6 +4,7 @@ receivers:
       grpc:
 exporters:
   logging:
+    loglevel: debug
 processors:
   batch:
     timeout: 10s
