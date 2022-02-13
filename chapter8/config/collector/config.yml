@@ -59,8 +59,12 @@ processors:
         rules:
           - ^\/stores\/(?P<storeId>.*)\/.*$
           - ^.*\/orders/(?P<orderId>.*)\/.*$
+  batch:
+    timeout: 10s # default 200ms
+    send_batch_size: 10000 # default 8192
+    send_batch_max_size: 11000 # default 0 – no limit
 service:
   pipelines:
     traces/otlp:
       receivers: [otlp]
-      processors: [span/rename, span/create-attributes]
+      processors: [batch, span/rename, span/create-attributes]
