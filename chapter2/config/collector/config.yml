@@ -1,0 +1,56 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+  hostmetrics:
+    scrapers:
+      cpu:
+      disk:
+      filesystem:
+      load:
+      memory:
+      network:
+  docker_stats:
+    collection_interval: 2s
+    timeout: 20s
+    api_version: 1.24
+    provide_per_core_cpu_metrics: true
+exporters:
+  logging:
+    loglevel: debug
+  jaeger:
+    endpoint: jaeger:14250
+    tls:
+      insecure: true
+  prometheus:
+    endpoint: 0.0.0.0:8889
+    resource_to_telemetry_conversion:
+      enabled: true
+  loki:
+    endpoint: http://loki:3100/loki/api/v1/push
+    labels:
+      resource:
+        telemetry.sdk.language: "telemetry_sdk_language"
+        telemetry.sdk.name: "telemetry_sdk_name"
+        telemetry.sdk.version: "telemetry_sdk_version"
+        net.host.name: "net_host_name"
+        net.host.ip: "net_host_ip"
+        service.name: "job"
+        severity: "severity"
+      attributes:
+        severity: ""
+extensions:
+  health_check:
+service:
+  extensions: [health_check]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [jaeger]
+    metrics:
+      receivers: [hostmetrics, otlp]
+      exporters: [prometheus, logging]
+    logs:
+      receivers: [otlp]
+      exporters: [loki]
