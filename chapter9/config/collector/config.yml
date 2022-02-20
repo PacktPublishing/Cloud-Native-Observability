@@ -24,3 +24,10 @@ agentCollector:
           processors: [batch, memory_limiter, resource]
         logs:
           processors: [batch, memory_limiter, resource]
+
+standaloneCollector:
+  enabled: true
+  resources:
+    limits:
+      cpu: 1
+      memory: 512Mi
