@@ -1,0 +1,26 @@
+extraEnvs:
+  - name: NODE_NAME
+    valueFrom:
+      fieldRef:
+        fieldPath: spec.nodeName
+config:
+  exporters:
+    logging:
+      loglevel: debug
+agentCollector:
+  enabled: true
+  configOverride:
+    processors:
+      resource:
+        attributes:
+          - key: k8s.node.name
+            value: ${NODE_NAME}
+            action: upsert
+    service:
+      pipelines:
+        metrics:
+          processors: [batch, memory_limiter, resource]
+        traces:
+          processors: [batch, memory_limiter, resource]
+        logs:
+          processors: [batch, memory_limiter, resource]
