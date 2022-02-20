@@ -1,0 +1,26 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-native-example
+  labels:
+    app: example
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: example
+  template:
+    metadata:
+      labels:
+        app: example
+    spec:
+      containers:
+        - name: legacy-inventory
+          image: codeboten/legacy-inventory:chapter9
+        - name: grocery-store
+          image: codeboten/grocery-store:chapter9
+        - name: shopper
+          image: codeboten/shopper:chapter9
+        - name: collector
+          image: otel/opentelemetry-collector:0.43.0
