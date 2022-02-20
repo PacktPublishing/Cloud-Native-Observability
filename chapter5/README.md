@@ -13,8 +13,11 @@ mkdir cloud_native_observability
 python3 -m venv cloud_native_observability
 source cloud_native_observability/bin/activate
 
-# install packages
-pip install opentelemetry-api opentelemetry-sdk
+# install OpenTelemetry packages
+pip install opentelemetry-api \
+            opentelemetry-sdk
+
+# install additional libraries
 pip install flask requests
 ```
 
