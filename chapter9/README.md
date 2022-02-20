@@ -16,6 +16,12 @@ kind create cluster
 
 ```
 
+## Add Helm repo
+
+```
+helm repo add open-telemetry https://open-telemetry.github.io/opentelemetry-helm-charts
+```
+
 ---
 
 _Cloud Native Observability_
