@@ -1,4 +1,36 @@
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: otel-sidecar-conf
+  labels:
+    app: opentelemetry
+    component: otel-sidecar-conf
+data:
+  otel-sidecar-config: |
+    receivers:
+      otlp:
+        protocols:
+          grpc:
+          http:
+    exporters:
+      otlp:
+        endpoint: "$NODE_IP:4317"
+        tls:
+          insecure: true
+    service:
+      pipelines:
+        traces:
+          receivers: [otlp]
+          exporters: [otlp]
+        metrics:
+          receivers: [otlp]
+          exporters: [otlp]
+        logs:
+          receivers: [otlp]
+          exporters: [otlp]
+
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -24,3 +56,21 @@ spec:
           image: codeboten/shopper:chapter9
         - name: collector
           image: otel/opentelemetry-collector:0.43.0
+          command:
+            - "/otelcol"
+            - "--config=/conf/otel-sidecar-config.yml"
+          volumeMounts:
+            - name: otel-sidecar-config-vol
+              mountPath: /conf
+          env:
+            - name: NODE_IP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+      volumes:
+        - configMap:
+            name: otel-sidecar-conf
+            items:
+              - key: otel-sidecar-config
+                path: otel-sidecar-config.yml
+          name: otel-sidecar-config-vol
