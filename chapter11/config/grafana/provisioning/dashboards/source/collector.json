@@ -21,7 +21,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1641682964193,
+  "iteration": 1645593091218,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -577,33 +577,39 @@
       {
         "current": {
           "selected": true,
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
+          "text": "All",
+          "value": "$__all"
         },
-        "definition": "request_count",
         "hide": 0,
         "includeAll": true,
-        "multi": true,
+        "multi": false,
         "name": "service",
-        "options": [],
-        "query": {
-          "query": "request_count",
-          "refId": "StandardVariableQuery"
-        },
-        "refresh": 1,
-        "regex": "/.*service_name=\"([^\"]*)\"/",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "grocery-store",
+            "value": "grocery-store"
+          },
+          {
+            "selected": false,
+            "text": "inventory",
+            "value": "inventory"
+          }
+        ],
+        "query": "grocery-store,inventory",
+        "queryValue": "",
         "skipUrlSync": false,
-        "sort": 0,
-        "type": "query"
+        "type": "custom"
       }
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-5m",
     "to": "now"
   },
   "timepicker": {},
