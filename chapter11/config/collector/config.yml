@@ -12,6 +12,7 @@ receivers:
       memory:
       network:
   docker_stats:
+    endpoint: file:///var/run/docker.sock
     collection_interval: 2s
     timeout: 20s
     api_version: 1.24
@@ -49,7 +50,7 @@ service:
       receivers: [otlp]
       exporters: [jaeger]
     metrics:
-      receivers: [hostmetrics, otlp]
+      receivers: [docker_stats, hostmetrics, otlp]
       exporters: [prometheus]
     logs:
       receivers: [otlp]

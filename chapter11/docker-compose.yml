@@ -13,7 +13,7 @@ services:
       - opentelemetry-collector
     deploy:
       replicas: 15
-    stop_grace_period: 1s
+    stop_grace_period: 100ms
   grocery-store:
     image: codeboten/grocery-store:chapter11
     container_name: grocery-store
@@ -30,12 +30,12 @@ services:
     cap_add:
       - NET_ADMIN
     ports:
-      - 8080:8080
+      - 5000:5000
     deploy:
       resources:
         limits:
           cpus: "0.50"
-          memory: 50M
+          memory: 100M
   legacy-inventory:
     image: codeboten/legacy-inventory:chapter11
     container_name: inventory
@@ -47,11 +47,13 @@ services:
       - cloud-native-observability
     depends_on:
       - opentelemetry-collector
+    ports:
+      - 5001:5001
     deploy:
       resources:
         limits:
           cpus: "0.50"
-          memory: 50M
+          memory: 100M
   jaeger:
     image: jaegertracing/all-in-one:1.29.0
     container_name: jaeger
@@ -73,7 +75,7 @@ services:
     networks:
       - cloud-native-observability
   opentelemetry-collector:
-    image: otel/opentelemetry-collector-contrib:0.42.0
+    image: codeboten/collector:0.45.0
     container_name: opentelemetry-collector
     volumes:
       - ./config/collector/config.yml/:/etc/opentelemetry-collector.yml
@@ -111,6 +113,11 @@ services:
       - ./config/grafana/provisioning:/etc/grafana/provisioning
     networks:
       - cloud-native-observability
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ORG_ROLE=viewer
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+      - GF_USERS_DEFAULT_THEME=light
 
 networks:
   cloud-native-observability:
