@@ -22,3 +22,9 @@ docker compose up -d legacy-inventory grocery-store shopper
 ```
 
 ## The solution
+
+A significant increase in request duration from the `inventory` service leads us to look at the traces for that service. A suspiciously named span has appeared. The **sleepy service** span shows that a 3 second delay was introduced in this version of the application causing issues in the system.
+
+---
+
+_Cloud Native Observability_
