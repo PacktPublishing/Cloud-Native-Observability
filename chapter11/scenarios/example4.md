@@ -22,3 +22,7 @@ docker compose up -d legacy-inventory grocery-store shopper
 ```
 
 ## The solution
+
+---
+
+_Cloud Native Observability_
