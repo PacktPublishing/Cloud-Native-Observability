@@ -25,6 +25,13 @@ pip install flask \
               opentelemetry-instrumentation-requests
 ```
 
+## OpenTelemetry Distro Implementations
+
+- OpenTelemetry Distro: https://github.com/open-telemetry/opentelemetry-python-contrib/blob/main/opentelemetry-distro/
+- Lightstep Launcher Distro: https://github.com/lightstep/otel-launcher-python/blob/main/src/opentelemetry/launcher/configuration.py
+- Splunk Distro: https://github.com/signalfx/splunk-otel-python/blob/main/splunk_otel/distro.py
+- Uptrace: https://github.com/uptrace/uptrace-python/blob/master/src/uptrace/distro.py
+
 ---
 
 _Cloud Native Observability_
