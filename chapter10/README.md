@@ -22,9 +22,9 @@ pip install opentelemetry-distro \
 docker compose up
 ```
 
-## Officially supported backend exporters in OpenTelemetry Python
+## Status of exporters for officially supported backend in OpenTelemetry Python
 
-| Backend    | Signal  | Status             |
+| Exporter   | Signal  | Status             |
 | ---------- | ------- | ------------------ |
 | Jaeger     | Tracing | Stable             |
 | Zipkin     | Tracing | Stable             |

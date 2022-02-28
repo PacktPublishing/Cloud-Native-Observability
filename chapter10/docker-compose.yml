@@ -1,21 +1,26 @@
 version: "3.7"
 services:
   shopper:
-    image: codeboten/shopper
+    image: codeboten/shopper:chapter10
     container_name: shopper
     environment:
       - OTEL_EXPORTER_OTLP_ENDPOINT=opentelemetry-collector:4317
+      - OTEL_EXPORTER_OTLP_INSECURE=true
+      - OTEL_SERVICE_NAME=shopper
       - GROCERY_STORE_URL=http://grocery-store:5000/products
     networks:
       - cloud-native-observability
     depends_on:
       - grocery-store
       - opentelemetry-collector
+    stop_grace_period: 100ms
   grocery-store:
-    image: codeboten/grocery-store
+    image: codeboten/grocery-store:chapter10
     container_name: grocery-store
     environment:
       - OTEL_EXPORTER_OTLP_ENDPOINT=opentelemetry-collector:4317
+      - OTEL_EXPORTER_OTLP_INSECURE=true
+      - OTEL_SERVICE_NAME=grocery-store
       - INVENTORY_URL=http://legacy-inventory:5001/inventory
     networks:
       - cloud-native-observability
@@ -25,10 +30,12 @@ services:
     ports:
       - 5000:5000
   legacy-inventory:
-    image: codeboten/legacy-inventory
+    image: codeboten/legacy-inventory:chapter10
     container_name: legacy-inventory
     environment:
       - OTEL_EXPORTER_OTLP_ENDPOINT=opentelemetry-collector:4317
+      - OTEL_EXPORTER_OTLP_INSECURE=true
+      - OTEL_SERVICE_NAME=inventory
     networks:
       - cloud-native-observability
     depends_on:
@@ -102,6 +109,11 @@ services:
       - ./config/grafana/provisioning:/etc/grafana/provisioning
     networks:
       - cloud-native-observability
+    environment:
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ORG_ROLE=viewer
+      - GF_AUTH_DISABLE_LOGIN_FORM=true
+      - GF_USERS_DEFAULT_THEME=light
 
 networks:
   cloud-native-observability:
