@@ -55,10 +55,18 @@ if __name__ == "__main__":
     # inventory_counter.add(20, {"apples": 10, "oranges": 5})
     # inventory_counter.add(-5, {"apples": 5})
 
-    upcounter_counter = meter.create_observable_up_down_counter(
-        name="customer_in_store",
-        callback=async_updowncounter_callback,
-        unit="persons",
-        description="Keeps a count of customers in the store",
+    # upcounter_counter = meter.create_observable_up_down_counter(
+    #     name="customer_in_store",
+    #     callback=async_updowncounter_callback,
+    #     unit="persons",
+    #     description="Keeps a count of customers in the store",
+    # )
+    # time.sleep(10)
+
+    histogram = meter.create_histogram(
+        "response_times",
+        unit="ms",
+        description="Response times for all requests",
     )
-    time.sleep(10)
+    histogram.record(96)
+    histogram.record(9)
