@@ -5,6 +5,12 @@ from opentelemetry.sdk._metrics.export import (
     ConsoleMetricExporter,
     PeriodicExportingMetricReader,
 )
+import time
+from opentelemetry._metrics.measurement import Measurement
+
+def async_counter_callback():
+    yield Measurement(10)
+
 
 
 def configure_meter_provider():
@@ -21,11 +27,18 @@ if __name__ == "__main__":
         version="0.1.2",
         schema_url=" https://opentelemetry.io/schemas/1.9.0",
     )
-    counter = meter.create_counter(
-        "items_sold",
-        unit="items",
-        description="Total items sold"
+    # counter = meter.create_counter(
+    #     "items_sold",
+    #     unit="items",
+    #     description="Total items sold"
+    # )
+    # counter.add(6, {"apple": 5, "orange": 1})
+    # counter.add(1, {"chair": 1})
+
+    meter.create_observable_counter(
+        name="major_page_faults",
+        callback=async_counter_callback,
+        description="page faults requiring I/O",
+        unit="fault",
     )
-    counter.add(6, {"apple": 5, "orange": 1})
-    counter.add(1, {"chair": 1})
-    counter.add(-1, {"unicorn": 1})
+    time.sleep(10)
