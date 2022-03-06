@@ -8,6 +8,7 @@ from opentelemetry.sdk._metrics.export import (
 import time
 from opentelemetry._metrics.measurement import Measurement
 import resource
+from opentelemetry.sdk._metrics.view import View
 
 
 def async_gauge_callback():
@@ -26,7 +27,13 @@ def async_updowncounter_callback():
 def configure_meter_provider():
     exporter = ConsoleMetricExporter()
     reader = PeriodicExportingMetricReader(exporter, export_interval_millis=5000)
-    provider = MeterProvider(metric_readers=[reader], resource=Resource.create())
+    view = View(instrument_name="inventory")
+    provider = MeterProvider(
+        metric_readers=[reader],
+        resource=Resource.create(),
+        views=[view],
+        enable_default_view=False,
+    )
     set_meter_provider(provider)
 
 
@@ -37,45 +44,41 @@ if __name__ == "__main__":
         version="0.1.2",
         schema_url=" https://opentelemetry.io/schemas/1.9.0",
     )
-    # counter = meter.create_counter(
-    #     "items_sold",
-    #     unit="items",
-    #     description="Total items sold"
-    # )
-    # counter.add(6, {"apple": 5, "orange": 1})
-    # counter.add(1, {"chair": 1})
+    counter = meter.create_counter(
+        "items_sold", unit="items", description="Total items sold"
+    )
+    counter.add(6, {"apple": 5, "orange": 1})
+    counter.add(1, {"chair": 1})
 
-    # meter.create_observable_counter(
-    #     name="major_page_faults",
-    #     callback=async_counter_callback,
-    #     description="page faults requiring I/O",
-    #     unit="fault",
-    # )
-    # time.sleep(10)
+    meter.create_observable_counter(
+        name="major_page_faults",
+        callback=async_counter_callback,
+        description="page faults requiring I/O",
+        unit="fault",
+    )
+    time.sleep(10)
+    inventory_counter = meter.create_up_down_counter(
+        name="inventory",
+        unit="items",
+        description="Number of items in inventory",
+    )
+    inventory_counter.add(20, {"apples": 10, "oranges": 5})
+    inventory_counter.add(-5, {"apples": 5})
 
-    # inventory_counter = meter.create_up_down_counter(
-    #     name="inventory",
-    #     unit="items",
-    #     description="Number of items in inventory",
-    # )
-    # inventory_counter.add(20, {"apples": 10, "oranges": 5})
-    # inventory_counter.add(-5, {"apples": 5})
-
-    # upcounter_counter = meter.create_observable_up_down_counter(
-    #     name="customer_in_store",
-    #     callback=async_updowncounter_callback,
-    #     unit="persons",
-    #     description="Keeps a count of customers in the store",
-    # )
-    # time.sleep(10)
-
-    # histogram = meter.create_histogram(
-    #     "response_times",
-    #     unit="ms",
-    #     description="Response times for all requests",
-    # )
-    # histogram.record(96)
-    # histogram.record(9)
+    upcounter_counter = meter.create_observable_up_down_counter(
+        name="customer_in_store",
+        callback=async_updowncounter_callback,
+        unit="persons",
+        description="Keeps a count of customers in the store",
+    )
+    time.sleep(10)
+    histogram = meter.create_histogram(
+        "response_times",
+        unit="ms",
+        description="Response times for all requests",
+    )
+    histogram.record(96)
+    histogram.record(9)
     meter.create_observable_gauge(
         name="maxrss",
         unit="bytes",
