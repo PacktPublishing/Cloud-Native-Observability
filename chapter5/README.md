@@ -21,6 +21,17 @@ pip install opentelemetry-api \
 pip install flask requests
 ```
 
+## Default aggregations
+
+| Instrument                 | Default aggregation                |
+| -------------------------- | ---------------------------------- |
+| Counter                    | SumAggregation                     |
+| Asynchronous Counter       | SumAggregation                     |
+| UpDownCounter              | SumAggregation                     |
+| Asynchronous UpDownCounter | SumAggregation                     |
+| Histogram                  | ExplicitBucketHistogramAggregation |
+| Asynchronous Gauge         | LastValueAggregation               |
+
 ---
 
 _Cloud Native Observability_
