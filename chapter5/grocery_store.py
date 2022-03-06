@@ -27,7 +27,12 @@ app = Flask(__name__)
 def before_request_func():
     token = context.attach(extract(request.headers))
     request.environ["context_token"] = token
-    request_counter.add(1)
+
+
+@app.after_request
+def increment_counter(response):
+    request_counter.add(1, {"code": response.status_code})
+    return response
 
 
 @app.teardown_request
