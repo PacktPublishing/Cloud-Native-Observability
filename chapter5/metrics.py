@@ -5,12 +5,9 @@ from opentelemetry.sdk._metrics.export import (
     ConsoleMetricExporter,
     PeriodicExportingMetricReader,
 )
-from opentelemetry.exporter.prometheus import PrometheusMetricReader
-from prometheus_client import start_http_server
 
 
 def configure_meter_provider():
-    start_http_server(port=8000, addr="localhost")
     exporter = ConsoleMetricExporter()
     reader = PeriodicExportingMetricReader(exporter, export_interval_millis=5000)
     provider = MeterProvider(metric_readers=[reader], resource=Resource.create())
@@ -31,3 +28,4 @@ if __name__ == "__main__":
     )
     counter.add(6, {"apple": 5, "orange": 1})
     counter.add(1, {"chair": 1})
+    counter.add(-1, {"unicorn": 1})
