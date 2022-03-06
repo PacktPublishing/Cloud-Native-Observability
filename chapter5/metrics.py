@@ -28,7 +28,7 @@ def async_updowncounter_callback():
 def configure_meter_provider():
     exporter = ConsoleMetricExporter()
     reader = PeriodicExportingMetricReader(exporter, export_interval_millis=5000)
-    view = View(instrument_name="inventory", instrument_type=Counter)
+    view = View(instrument_type=Counter, attribute_keys=["orange"])
     provider = MeterProvider(
         metric_readers=[reader],
         resource=Resource.create(),
@@ -57,7 +57,7 @@ if __name__ == "__main__":
         description="page faults requiring I/O",
         unit="fault",
     )
-    time.sleep(10)
+    # time.sleep(10)
     inventory_counter = meter.create_up_down_counter(
         name="inventory",
         unit="items",
@@ -72,7 +72,7 @@ if __name__ == "__main__":
         unit="persons",
         description="Keeps a count of customers in the store",
     )
-    time.sleep(10)
+    # time.sleep(10)
     histogram = meter.create_histogram(
         "response_times",
         unit="ms",
@@ -86,4 +86,4 @@ if __name__ == "__main__":
         callback=async_gauge_callback,
         description="Max resident set size",
     )
-    time.sleep(10)
+    # time.sleep(10)
