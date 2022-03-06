@@ -1,4 +1,4 @@
-from opentelemetry._metrics import set_meter_provider
+from opentelemetry._metrics import get_meter_provider, set_meter_provider
 from opentelemetry.sdk._metrics import MeterProvider
 from opentelemetry.sdk.resources import Resource
 from opentelemetry.sdk._metrics.export import (
@@ -16,3 +16,8 @@ def configure_meter_provider():
 
 if __name__ == "__main__":
     configure_meter_provider()
+    meter = get_meter_provider().get_meter(
+        name="metric-example",
+        version="0.1.2",
+        schema_url=" https://opentelemetry.io/schemas/1.9.0",
+    )
