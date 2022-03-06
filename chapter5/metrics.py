@@ -9,6 +9,7 @@ import time
 from opentelemetry._metrics.measurement import Measurement
 import resource
 from opentelemetry.sdk._metrics.view import View
+from opentelemetry._metrics.instrument import Counter
 
 
 def async_gauge_callback():
@@ -27,7 +28,7 @@ def async_updowncounter_callback():
 def configure_meter_provider():
     exporter = ConsoleMetricExporter()
     reader = PeriodicExportingMetricReader(exporter, export_interval_millis=5000)
-    view = View(instrument_name="inventory")
+    view = View(instrument_name="inventory", instrument_type=Counter)
     provider = MeterProvider(
         metric_readers=[reader],
         resource=Resource.create(),
