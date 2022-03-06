@@ -28,7 +28,12 @@ def async_updowncounter_callback():
 def configure_meter_provider():
     exporter = ConsoleMetricExporter()
     reader = PeriodicExportingMetricReader(exporter, export_interval_millis=5000)
-    view = View(instrument_type=Counter, attribute_keys=["orange"])
+    view = View(
+        instrument_type=Counter,
+        attribute_keys=[],
+        name="sold",
+        description="total items sold",
+    )
     provider = MeterProvider(
         metric_readers=[reader],
         resource=Resource.create(),
