@@ -11,7 +11,8 @@ from prometheus_client import start_http_server
 
 def configure_meter_provider():
     start_http_server(port=8000, addr="localhost")
-    reader = PrometheusMetricReader(prefix="MetricExample")
+    exporter = ConsoleMetricExporter()
+    reader = PeriodicExportingMetricReader(exporter, export_interval_millis=5000)
     provider = MeterProvider(metric_readers=[reader], resource=Resource.create())
     set_meter_provider(provider)
 
@@ -23,4 +24,10 @@ if __name__ == "__main__":
         version="0.1.2",
         schema_url=" https://opentelemetry.io/schemas/1.9.0",
     )
-    input("Press any key to exit...")
+    counter = meter.create_counter(
+        "items_sold",
+        unit="items",
+        description="Total items sold"
+    )
+    counter.add(6, {"apple": 5, "orange": 1})
+    counter.add(1, {"chair": 1})
