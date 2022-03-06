@@ -7,6 +7,12 @@ from opentelemetry.sdk._metrics.export import (
 )
 import time
 from opentelemetry._metrics.measurement import Measurement
+import resource
+
+
+def async_gauge_callback():
+    rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
+    yield Measurement(rss, {})
 
 
 def async_counter_callback():
@@ -63,10 +69,17 @@ if __name__ == "__main__":
     # )
     # time.sleep(10)
 
-    histogram = meter.create_histogram(
-        "response_times",
-        unit="ms",
-        description="Response times for all requests",
+    # histogram = meter.create_histogram(
+    #     "response_times",
+    #     unit="ms",
+    #     description="Response times for all requests",
+    # )
+    # histogram.record(96)
+    # histogram.record(9)
+    meter.create_observable_gauge(
+        name="maxrss",
+        unit="bytes",
+        callback=async_gauge_callback,
+        description="Max resident set size",
     )
-    histogram.record(96)
-    histogram.record(9)
+    time.sleep(10)
