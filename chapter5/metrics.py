@@ -8,9 +8,13 @@ from opentelemetry.sdk._metrics.export import (
 import time
 from opentelemetry._metrics.measurement import Measurement
 
+
 def async_counter_callback():
     yield Measurement(10)
 
+
+def async_updowncounter_callback():
+    yield Measurement(20)
 
 
 def configure_meter_provider():
@@ -43,11 +47,18 @@ if __name__ == "__main__":
     # )
     # time.sleep(10)
 
-    inventory_counter = meter.create_up_down_counter(
-        name="inventory",
-        unit="items",
-        description="Number of items in inventory",
-    )
-    inventory_counter.add(20, {"apples": 10, "oranges": 5})
-    inventory_counter.add(-5, {"apples": 5})
+    # inventory_counter = meter.create_up_down_counter(
+    #     name="inventory",
+    #     unit="items",
+    #     description="Number of items in inventory",
+    # )
+    # inventory_counter.add(20, {"apples": 10, "oranges": 5})
+    # inventory_counter.add(-5, {"apples": 5})
 
+    upcounter_counter = meter.create_observable_up_down_counter(
+        name="customer_in_store",
+        callback=async_updowncounter_callback,
+        unit="persons",
+        description="Keeps a count of customers in the store",
+    )
+    time.sleep(10)
