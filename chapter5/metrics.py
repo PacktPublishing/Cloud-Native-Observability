@@ -35,10 +35,19 @@ if __name__ == "__main__":
     # counter.add(6, {"apple": 5, "orange": 1})
     # counter.add(1, {"chair": 1})
 
-    meter.create_observable_counter(
-        name="major_page_faults",
-        callback=async_counter_callback,
-        description="page faults requiring I/O",
-        unit="fault",
+    # meter.create_observable_counter(
+    #     name="major_page_faults",
+    #     callback=async_counter_callback,
+    #     description="page faults requiring I/O",
+    #     unit="fault",
+    # )
+    # time.sleep(10)
+
+    inventory_counter = meter.create_up_down_counter(
+        name="inventory",
+        unit="items",
+        description="Number of items in inventory",
     )
-    time.sleep(10)
+    inventory_counter.add(20, {"apples": 10, "oranges": 5})
+    inventory_counter.add(-5, {"apples": 5})
+
