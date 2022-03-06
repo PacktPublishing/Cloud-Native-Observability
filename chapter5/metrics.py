@@ -10,6 +10,7 @@ from opentelemetry._metrics.measurement import Measurement
 import resource
 from opentelemetry.sdk._metrics.view import View
 from opentelemetry._metrics.instrument import Counter
+from opentelemetry.sdk._metrics.aggregation import LastValueAggregation
 
 
 def async_gauge_callback():
@@ -33,6 +34,7 @@ def configure_meter_provider():
         attribute_keys=[],
         name="sold",
         description="total items sold",
+        aggregation=LastValueAggregation(),
     )
     provider = MeterProvider(
         metric_readers=[reader],
