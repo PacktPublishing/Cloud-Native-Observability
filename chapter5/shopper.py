@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import requests
+import time
 
 from opentelemetry import trace
 from opentelemetry.propagate import inject
@@ -12,6 +13,17 @@ from local_machine_resource_detector import LocalMachineResourceDetector
 
 tracer = configure_tracer("shopper", "0.1.2")
 meter = configure_meter("shopper", "0.1.2")
+total_duration_histo = meter.create_histogram(
+    name="duration",
+    description="request duration",
+    unit="ms",
+)
+
+upstream_duration_histo = meter.create_histogram(
+    name="upstream_request_duration",
+    description="duration of upstream requests",
+    unit="ms",
+)
 
 
 @tracer.start_as_current_span("browse")
@@ -32,7 +44,11 @@ def browse():
         headers = {}
         inject(headers)
         span.add_event("about to send a request")
+        start = time.time_ns()
         resp = requests.get(url, headers=headers)
+        duration = (time.time_ns() - start) / 1e6
+        upstream_duration_histo.record(duration)
+
         if resp:
             span.set_status(Status(StatusCode.OK))
         else:
@@ -63,7 +79,10 @@ def add_item_to_cart(item, quantity):
 
 @tracer.start_as_current_span("visit store")
 def visit_store():
+    start = time.time_ns()
     browse()
+    duration = (time.time_ns() - start) / 1e6
+    total_duration_histo.record(duration)
 
 
 if __name__ == "__main__":
