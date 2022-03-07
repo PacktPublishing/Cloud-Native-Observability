@@ -7,7 +7,7 @@ from opentelemetry.propagate import inject
 from opentelemetry.semconv.trace import HttpFlavorValues, SpanAttributes
 from opentelemetry.trace import Status, StatusCode
 
-from common import configure_meter, configure_tracer
+from common import configure_meter, configure_tracer, start_recording_memory_metrics
 from local_machine_resource_detector import LocalMachineResourceDetector
 
 
@@ -86,4 +86,5 @@ def visit_store():
 
 
 if __name__ == "__main__":
+    start_recording_memory_metrics(meter)
     visit_store()

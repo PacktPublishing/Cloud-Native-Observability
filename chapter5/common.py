@@ -1,3 +1,4 @@
+import resource
 from flask import request
 from opentelemetry import trace
 from opentelemetry.sdk.resources import Resource
@@ -12,6 +13,7 @@ from opentelemetry.sdk._metrics.export import (
     ConsoleMetricExporter,
     PeriodicExportingMetricReader,
 )
+from opentelemetry._metrics.measurement import Measurement
 
 
 def configure_meter(name, version):
@@ -66,4 +68,17 @@ def set_span_attributes_from_flask():
             SpanAttributes.HTTP_TARGET: request.path,
             SpanAttributes.HTTP_CLIENT_IP: request.remote_addr,
         }
+    )
+
+
+def record_max_rss_callback():
+    yield Measurement(resource.getrusage(resource.RUSAGE_SELF).ru_maxrss)
+
+
+def start_recording_memory_metrics(meter):
+    meter.create_observable_gauge(
+        callback=record_max_rss_callback,
+        name="maxrss",
+        unit="bytes",
+        description="Max resident set size",
     )
