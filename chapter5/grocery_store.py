@@ -30,6 +30,11 @@ upstream_duration_histo = meter.create_histogram(
     description="duration of upstream requests",
     unit="ms",
 )
+concurrent_counter = meter.create_up_down_counter(
+    name="concurrent_requests",
+    unit="request",
+    description="Total number of concurrent requests",
+)
 set_global_textmap(
     CompositePropagator([tracecontext.TraceContextTextMapPropagator(), B3MultiFormat()])
 )
@@ -41,6 +46,7 @@ def before_request_func():
     token = context.attach(extract(request.headers))
     request.environ["context_token"] = token
     request.environ["start_time"] = time.time_ns()
+    concurrent_counter.add(1)
 
 
 @app.after_request
@@ -48,6 +54,7 @@ def increment_counter(response):
     request_counter.add(1, {"code": response.status_code})
     duration = (time.time_ns() - request.environ["start_time"]) / 1e6
     total_duration_histo.record(duration)
+    concurrent_counter.add(-1)
     return response
 
 
