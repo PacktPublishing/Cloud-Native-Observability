@@ -116,7 +116,6 @@ services:
       - GF_AUTH_ORG_ROLE=Editor
       - GF_AUTH_ANONYMOUS_ORG_ROLE=Admin
       - GF_AUTH_DISABLE_LOGIN_FORM=true
-      - GF_USERS_DEFAULT_THEME=light
 
 networks:
   cloud-native-observability:
