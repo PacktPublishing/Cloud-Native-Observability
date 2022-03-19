@@ -22,6 +22,17 @@ pip install opentelemetry-api \
 pip install flask requests
 ```
 
+## Instruments
+
+| Instrument                 | Synchronicity | Monotonic |
+| -------------------------- | ------------- | --------- |
+| Counter                    | Synchronous   | Yes       |
+| Asynchronous Counter       | Asynchronous  | Yes       |
+| UpDownCounter              | Synchronous   | No        |
+| Asynchronous UpDownCounter | Asynchronous  | No        |
+| Histogram                  | Synchronous   | No        |
+| Asynchronous Gauge         | Asynchronous  | No        |
+
 ## Default aggregations
 
 | Instrument                 | Default aggregation                |
