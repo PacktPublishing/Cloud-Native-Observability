@@ -56,8 +56,8 @@ if __name__ == "__main__":
     counter = meter.create_counter(
         "items_sold", unit="items", description="Total items sold"
     )
-    counter.add(6, {"apple": 5, "orange": 1})
-    counter.add(1, {"chair": 1})
+    counter.add(6, {"locale": "fr-FR", "country": "CA"})
+    counter.add(1, {"locale": "es-ES"})
 
     meter.create_observable_counter(
         name="major_page_faults",
@@ -71,8 +71,8 @@ if __name__ == "__main__":
         unit="items",
         description="Number of items in inventory",
     )
-    inventory_counter.add(20, {"apples": 10, "oranges": 5})
-    inventory_counter.add(-5, {"apples": 5})
+    inventory_counter.add(20)
+    inventory_counter.add(-5)
 
     upcounter_counter = meter.create_observable_up_down_counter(
         name="customer_in_store",

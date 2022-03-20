@@ -44,6 +44,23 @@ pip install flask requests
 | Histogram                  | ExplicitBucketHistogramAggregation |
 | Asynchronous Gauge         | LastValueAggregation               |
 
+## Dimensions
+
+| Customer | Country | Locale |
+| -------- | ------- | ------ |
+| 1        | Canada  | en-US  |
+| 1        | France  | fr-FR  |
+| 1        | Canda   | fr-FR  |
+
+## Effect of attribute keys
+
+| Counter operation                           | Transformed via attribute keys |
+| ------------------------------------------- | ------------------------------ |
+| `add(1,{"locale":"fr-FR"})`                 | `add(1,{"locale":"fr-FR"})`    |
+| `add(1,{"country":"CA"})`                   | `add(1,{})`                    |
+| `add(1,{"locale":"en-US", "country":"CA"})` | `add(1,{"locale":"en-US"})`    |
+| `add(1,{})`                                 | `add(1,{})`                    |
+
 ---
 
 _Cloud Native Observability_
