@@ -23,7 +23,8 @@ def async_counter_callback():
 
 
 def async_updowncounter_callback():
-    yield Measurement(20)
+    yield Measurement(20, {"locale": "en-US"})
+    yield Measurement(10, {"locale": "fr-CA"})
 
 
 def configure_meter_provider():
