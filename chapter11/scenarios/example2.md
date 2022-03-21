@@ -21,6 +21,9 @@
 docker compose up -d legacy-inventory grocery-store shopper
 ```
 
+<details>
+  <summary>Click to see the solution!</summary>
+
 ## The solution
 
 Error rate for both `grocery-store` and `shopper` trend upward. Looking at a trace for `grocery-store` yields the following error:
@@ -38,6 +41,8 @@ The metrics reported by the `inventory` container are normal, although it is not
 ```
 
 The ports are mismatched! Example 2 contains a configuration error in the `inventory` service.
+
+</details>
 
 ---
 
