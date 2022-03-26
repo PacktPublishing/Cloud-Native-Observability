@@ -13,6 +13,10 @@ services:
       - opentelemetry-collector
     deploy:
       replicas: 15
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 100M
     stop_grace_period: 100ms
   grocery-store:
     image: codeboten/grocery-store:chapter11

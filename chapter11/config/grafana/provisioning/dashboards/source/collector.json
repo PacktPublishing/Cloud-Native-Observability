@@ -114,7 +114,7 @@
             "uid": "prometheus_datasource"
           },
           "exemplar": true,
-          "expr": "avg(container_cpu_percent{container_name=~\"chapter11_shopper.*\"})",
+          "expr": "avg(container_cpu_percent{container_name=~\"chapter11_shopper.*\"}) by (container_image_name)",
           "interval": "",
           "legendFormat": "shopper",
           "refId": "A"
@@ -201,7 +201,7 @@
             "uid": "prometheus_datasource"
           },
           "exemplar": true,
-          "expr": "avg(container_memory_percent{container_name=~\"chapter11_shopper.*\"})",
+          "expr": "avg(container_memory_percent{container_name=~\"chapter11_shopper.*\"}) by (container_image_name)",
           "interval": "",
           "legendFormat": "{{container_name}}",
           "refId": "A"
@@ -286,7 +286,7 @@
             "uid": "prometheus_datasource"
           },
           "exemplar": true,
-          "expr": "avg(rate(container_network_io_usage_rx_bytes{container_name=~\"chapter11_shopper.*\"}[1m]))",
+          "expr": "avg(rate(container_network_io_usage_rx_bytes{container_name=~\"chapter11_shopper.*\"}[1m])) by (container_image_name)",
           "interval": "",
           "legendFormat": "{{container_name}}",
           "refId": "A"
@@ -386,7 +386,7 @@
             "uid": "prometheus_datasource"
           },
           "exemplar": true,
-          "expr": "container_cpu_percent{container_name=\"${service}\"}",
+          "expr": "avg(container_cpu_percent{container_name=\"${service}\"}) by (container_image_name)",
           "interval": "",
           "legendFormat": "{{container_name}}",
           "refId": "A"
@@ -473,7 +473,7 @@
             "uid": "prometheus_datasource"
           },
           "exemplar": true,
-          "expr": "container_memory_percent{container_name=\"${service}\"}",
+          "expr": "avg(container_memory_percent{container_name=\"${service}\"}) by (container_image_name)",
           "interval": "",
           "legendFormat": "{{container_name}}",
           "refId": "A"
@@ -558,7 +558,7 @@
             "uid": "prometheus_datasource"
           },
           "exemplar": true,
-          "expr": "rate(container_network_io_usage_rx_bytes{container_name=\"${service}\"}[1m])",
+          "expr": "avg(rate(container_network_io_usage_rx_bytes{container_name=\"${service}\"}[1m])) by (container_image_name)",
           "interval": "",
           "legendFormat": "{{container_name}}",
           "refId": "A"
