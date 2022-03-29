@@ -50,7 +50,7 @@ pip install flask requests
 | -------- | ------- | ------ |
 | 1        | Canada  | en-US  |
 | 1        | France  | fr-FR  |
-| 1        | Canda   | fr-FR  |
+| 1        | Canada  | fr-FR  |
 
 ## Effect of attribute keys
 
