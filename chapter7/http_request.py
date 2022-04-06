@@ -17,5 +17,5 @@ RequestsInstrumentor().instrument(
     span_callback=add_response_attributes,
 )
 
-resp = requests.get("https://google.com")
+resp = requests.get("https://www.cloudnativeobservability.com")
 print(resp.status_code)
