@@ -23,7 +23,7 @@ if __name__ == "__main__":
     configure_log_emitter_provider()
     log_emitter = get_log_emitter_provider().get_log_emitter(
         "shopper",
-        instrumenting_module_verison="0.1.2",
+        "0.1.2",
     )
     log_emitter.emit(
         LogRecord(
