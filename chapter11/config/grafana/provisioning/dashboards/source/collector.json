@@ -21,7 +21,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "iteration": 1645593091218,
+  "iteration": 1649304355399,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -31,276 +31,6 @@
         "w": 24,
         "x": 0,
         "y": 0
-      },
-      "id": 22,
-      "title": "shopper",
-      "type": "row"
-    },
-    {
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "axisSoftMax": 100,
-            "axisSoftMin": 0,
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 8,
-        "x": 0,
-        "y": 1
-      },
-      "id": 27,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "hidden",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus_datasource"
-          },
-          "exemplar": true,
-          "expr": "avg(container_cpu_percent{container_name=~\"chapter11_shopper.*\"}) by (container_image_name)",
-          "interval": "",
-          "legendFormat": "shopper",
-          "refId": "A"
-        }
-      ],
-      "title": "CPU",
-      "type": "timeseries"
-    },
-    {
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "max": 100,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 8,
-        "x": 8,
-        "y": 1
-      },
-      "id": 28,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "hidden",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus_datasource"
-          },
-          "exemplar": true,
-          "expr": "avg(container_memory_percent{container_name=~\"chapter11_shopper.*\"}) by (container_image_name)",
-          "interval": "",
-          "legendFormat": "{{container_name}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Memory",
-      "type": "timeseries"
-    },
-    {
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "bytes"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 6,
-        "w": 8,
-        "x": 16,
-        "y": 1
-      },
-      "id": 29,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "hidden",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "prometheus_datasource"
-          },
-          "exemplar": true,
-          "expr": "avg(rate(container_network_io_usage_rx_bytes{container_name=~\"chapter11_shopper.*\"}[1m])) by (container_image_name)",
-          "interval": "",
-          "legendFormat": "{{container_name}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Network",
-      "type": "timeseries"
-    },
-    {
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 7
       },
       "id": 16,
       "panels": [],
@@ -366,7 +96,7 @@
         "h": 6,
         "w": 8,
         "x": 0,
-        "y": 8
+        "y": 1
       },
       "id": 10,
       "options": {
@@ -386,7 +116,7 @@
             "uid": "prometheus_datasource"
           },
           "exemplar": true,
-          "expr": "avg(container_cpu_percent{container_name=\"${service}\"}) by (container_image_name)",
+          "expr": "avg(container_cpu_percent{container_name=~\"chapter11_${service}.*|${service}\"}) by (container_image_name)",
           "interval": "",
           "legendFormat": "{{container_name}}",
           "refId": "A"
@@ -453,7 +183,7 @@
         "h": 6,
         "w": 8,
         "x": 8,
-        "y": 8
+        "y": 1
       },
       "id": 12,
       "options": {
@@ -473,7 +203,7 @@
             "uid": "prometheus_datasource"
           },
           "exemplar": true,
-          "expr": "avg(container_memory_percent{container_name=\"${service}\"}) by (container_image_name)",
+          "expr": "avg(container_memory_percent{container_name=~\"chapter11_${service}.*|${service}\"}) by (container_image_name)",
           "interval": "",
           "legendFormat": "{{container_name}}",
           "refId": "A"
@@ -538,7 +268,7 @@
         "h": 6,
         "w": 8,
         "x": 16,
-        "y": 8
+        "y": 1
       },
       "id": 14,
       "options": {
@@ -558,7 +288,7 @@
             "uid": "prometheus_datasource"
           },
           "exemplar": true,
-          "expr": "avg(rate(container_network_io_usage_rx_bytes{container_name=\"${service}\"}[1m])) by (container_image_name)",
+          "expr": "avg(rate(container_network_io_usage_rx_bytes{container_name=~\"chapter11_${service}.*|${service}\"}[1m])) by (container_image_name)",
           "interval": "",
           "legendFormat": "{{container_name}}",
           "refId": "A"
@@ -592,6 +322,11 @@
           },
           {
             "selected": false,
+            "text": "shopper",
+            "value": "shopper"
+          },
+          {
+            "selected": false,
             "text": "grocery-store",
             "value": "grocery-store"
           },
@@ -601,7 +336,7 @@
             "value": "inventory"
           }
         ],
-        "query": "grocery-store,inventory",
+        "query": "shopper,grocery-store,inventory",
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
@@ -609,7 +344,7 @@
     ]
   },
   "time": {
-    "from": "now-5m",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {},
