@@ -3,31 +3,46 @@ extraEnvs:
     valueFrom:
       fieldRef:
         fieldPath: spec.nodeName
+
+mode: daemonset
+
 config:
   exporters:
+    otlp:
+      endpoint: otel-collector-standalone-opentelemetry-collector:4317
+      tls:
+        insecure: true
     logging:
       loglevel: debug
-agentCollector:
-  enabled: true
-  configOverride:
-    processors:
-      resource:
-        attributes:
-          - key: k8s.node.name
-            value: ${NODE_NAME}
-            action: upsert
-    service:
-      pipelines:
-        metrics:
-          processors: [batch, memory_limiter, resource]
-        traces:
-          processors: [batch, memory_limiter, resource]
-        logs:
-          processors: [batch, memory_limiter, resource]
-
-standaloneCollector:
-  enabled: true
-  resources:
-    limits:
-      cpu: 1
-      memory: 512Mi
+  processors:
+    resource:
+      attributes:
+        - key: k8s.node.name
+          value: ${NODE_NAME}
+          action: upsert
+  service:
+    pipelines:
+      logs:
+        exporters:
+          - otlp
+          - logging
+        processors:
+          - batch
+          - memory_limiter
+          - resource
+      metrics:
+        exporters:
+          - otlp
+          - logging
+        processors:
+          - batch
+          - memory_limiter
+          - resource
+      traces:
+        exporters:
+          - otlp
+          - logging
+        processors:
+          - batch
+          - memory_limiter
+          - resource
