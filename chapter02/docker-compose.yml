@@ -12,7 +12,7 @@ services:
     depends_on:
       - grocery-store
       - opentelemetry-collector
-    stop_grace_period: 100ms
+    stop_grace_period: 1s
   grocery-store:
     image: codeboten/grocery-store:chapter2
     container_name: grocery-store
@@ -25,7 +25,7 @@ services:
     depends_on:
       - legacy-inventory
       - opentelemetry-collector
-    stop_grace_period: 100ms
+    stop_grace_period: 1s
     ports:
       - 5000:5000
     deploy:
@@ -43,7 +43,7 @@ services:
       - cloud-native-observability
     depends_on:
       - opentelemetry-collector
-    stop_grace_period: 100ms
+    stop_grace_period: 1s
     ports:
       - 5001:5001
     deploy:
@@ -85,7 +85,7 @@ services:
       - 4317:4317
       - 13133:13133
       - 8889:8889
-    stop_grace_period: 100ms
+    stop_grace_period: 1s
   loki:
     image: grafana/loki:2.3.0
     container_name: loki
