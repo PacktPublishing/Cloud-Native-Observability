@@ -52,6 +52,18 @@ With the following software and hardware list you can run all code files present
 
 We also provide a PDF file that has color images of the screenshots/diagrams used in this book. [Click here to download it](https://static.packt-cdn.com/downloads/9781801077705_ColorImages.pdf).
 
+<!-- 
+
+-->
+## Errata
+
+* Page 29 (Figure 2.1): The port for the legacy-inventory should say **5001**
+
+<!-- 
+
+-->
+
+
 ### Related products
 * Cloud Native with Kubernetes [[Packt]](https://www.packtpub.com/product/cloud-native-with-kubernetes/9781838823078?utm_source=github&utm_medium=repository&utm_campaign=9781838823078) [[Amazon]](https://www.amazon.com/dp/1838823077)
 
