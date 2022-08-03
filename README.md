@@ -58,6 +58,7 @@ We also provide a PDF file that has color images of the screenshots/diagrams use
 ## Errata
 
 * Page 29 (Figure 2.1): The port for the legacy-inventory should say **5001**
+* Page 55 (Figure 2.5): The bubble between inventory API and inventory store should be labeled **4** instead of 3.
 
 <!-- 
 
