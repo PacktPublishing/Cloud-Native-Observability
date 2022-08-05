@@ -32,7 +32,7 @@ services:
       resources:
         limits:
           cpus: "0.50"
-          memory: 50M
+          memory: 80M
   legacy-inventory:
     image: codeboten/legacy-inventory:chapter2
     container_name: inventory
@@ -50,7 +50,7 @@ services:
       resources:
         limits:
           cpus: "0.50"
-          memory: 50M
+          memory: 80M
   jaeger:
     image: jaegertracing/all-in-one:1.29.0
     container_name: jaeger
