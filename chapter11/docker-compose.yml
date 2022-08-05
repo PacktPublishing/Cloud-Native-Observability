@@ -17,7 +17,7 @@ services:
         limits:
           cpus: "0.50"
           memory: 100M
-    stop_grace_period: 100ms
+    stop_grace_period: 1s
   grocery-store:
     image: codeboten/grocery-store:chapter11
     container_name: grocery-store
