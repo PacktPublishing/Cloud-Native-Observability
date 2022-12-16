@@ -1,3 +1,15 @@
+
+### Get this product for $5
+
+<i>Packt is having its biggest sale of the year. Get this eBook or any other book, video, or course that you like just for $5 each</i>
+
+
+<b><p align='center'>[Buy now](https://packt.link/9781801077705)</p></b>
+
+
+<b><p align='center'>[Buy similar titles for just $5](https://subscription.packtpub.com/search)</p></b>
+
+
 # Cloud-Native Observability with OpenTelemetry
 
 <a href="https://www.packtpub.com/cloud-networking/cloud-native-observability-with-opentelemetry?utm_source=github&utm_medium=repository&utm_campaign=9781801077705"><img src="https://static.packt-cdn.com/products/9781801077705/cover/smaller" alt="Cloud-Native Observability with OpenTelemetry" height="256px" align="right"></a>
